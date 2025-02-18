@@ -1,7 +1,10 @@
+flask
+flask-cors
+joblib
 pandas
 numpy
 scikit-learn
+xgboost
 matplotlib
 seaborn
 plotly
-flask
