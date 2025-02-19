@@ -3,7 +3,7 @@ from flask_cors import CORS
 import numpy as np
 import pandas as pd
 from model_loader import load_model
-from database import create_table, save_prediction
+from database import create_database, save_prediction
 
 app = Flask(__name__)
 CORS(app)
@@ -12,7 +12,7 @@ CORS(app)
 model = load_model()
 
 
-create_table()
+create_database()
 
 features = ['Loan_Amount', 'Interest_Rate', 'Loan_Tenure', 'Employment_Type', 
             'Monthly_Income', 'Num_Missed_Payments', 'Days_Past_Due', 'Collateral_Value']
