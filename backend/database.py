@@ -1,8 +1,12 @@
 import sqlite3
+import os
 
-DB_PATH = "backend/loan_recovery.db"
 
-def create_table():
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  
+DB_PATH = os.path.join(BASE_DIR, "loan_recovery.db")  
+
+def create_database():
+    """Creates the database and the predictions table if it doesn't exist."""
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute("""
@@ -22,8 +26,10 @@ def create_table():
     """)
     conn.commit()
     conn.close()
+    print(f"Database created successfully at {DB_PATH}")
 
 def save_prediction(data, predicted_status, confidence):
+    """Saves a loan prediction to the database."""
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute("""
@@ -39,3 +45,7 @@ def save_prediction(data, predicted_status, confidence):
     ))
     conn.commit()
     conn.close()
+    print("Prediction saved successfully.")
+
+if __name__ == "__main__":
+    create_database()
