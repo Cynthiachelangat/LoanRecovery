@@ -8,14 +8,10 @@ const Navbar: React.FC = () => {
         <h1 className="text-xl font-bold">Loan Recovery</h1>
         <ul className="flex gap-4">
           <li>
-            <Link href="/">
-              <a className="hover:underline">Home</a>
-            </Link>
+            <Link href="/" className="hover:underline">Home</Link>
           </li>
           <li>
-            <Link href="/about">
-              <a className="hover:underline">About</a>
-            </Link>
+            <Link href="/about" className="hover:underline">About</Link>
           </li>
         </ul>
       </div>

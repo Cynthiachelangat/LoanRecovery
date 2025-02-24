@@ -6,21 +6,27 @@ from model_loader import load_model
 from database import create_database, save_prediction
 
 app = Flask(__name__)
-CORS(app)
-
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 model = load_model()
-
 
 create_database()
 
 features = ['Loan_Amount', 'Interest_Rate', 'Loan_Tenure', 'Employment_Type', 
             'Monthly_Income', 'Num_Missed_Payments', 'Days_Past_Due', 'Collateral_Value']
 
+@app.route('/')
+def home():
+    return "Loan Recovery Prediction API is running!"
+
 def preprocess_input(data):
     try:
-        df = pd.DataFrame([data])
-        df['Employment_Type'] = df['Employment_Type'].map({"Salaried": 0, "self-Employment": 1, "Business Owner":2})
+        df = pd.DataFrame([data])        
+        df['Employment_Type'] = df['Employment_Type'].map({
+            "Salaried": 0, 
+            "self-Employment": 1, 
+            "Business Owner": 2
+        })
         df = df.fillna(0)
         return df
     except Exception as e:
@@ -31,14 +37,16 @@ def predict():
     try:
         data = request.get_json()
 
+        
         missing_fields = [field for field in features if field not in data]
         if missing_fields:
             return jsonify({"error": f"Missing fields: {missing_fields}"}), 400
-        
+
         input_data = preprocess_input(data)
         if isinstance(input_data, str):
             return jsonify({"error": input_data}), 400
 
+       
         prediction = model.predict(input_data)
         prediction_proba = model.predict_proba(input_data)
 
@@ -46,7 +54,7 @@ def predict():
         predicted_status = status_mapping[prediction[0]]
         confidence = np.max(prediction_proba[0])
 
-       
+        
         save_prediction(data, predicted_status, round(float(confidence), 2))
 
         return jsonify({
@@ -57,4 +65,4 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
