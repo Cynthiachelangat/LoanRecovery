@@ -1,8 +1,8 @@
-"use client"; 
+"use client";
 
 import React, { useState } from "react";
-import { predictLoanRecovery } from "../../utils/api";
-import { FormData, PredictionResult } from "../../types";
+import { predictLoanRecovery } from "../utils/api";
+import { FormData, PredictionResult } from "../types";
 
 const LoanForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -34,7 +34,79 @@ const LoanForm: React.FC = () => {
   return (
     <div className="p-4">
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Form fields go here */}
+        <input
+          type="number"
+          name="Loan_Amount"
+          placeholder="Loan Amount"
+          value={formData.Loan_Amount}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        />
+        <input
+          type="number"
+          name="Interest_Rate"
+          placeholder="Interest Rate"
+          value={formData.Interest_Rate}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        />
+        <input
+          type="number"
+          name="Loan_Tenure"
+          placeholder="Loan Tenure"
+          value={formData.Loan_Tenure}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        />
+        <select
+          name="Employment_Type"
+          value={formData.Employment_Type}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        >
+          <option value="">Select Employment Type</option>
+          <option value="Salaried">Salaried</option>
+          <option value="Self-Employment">Self-Employment</option>
+          <option value="Business Owner">Business Owner</option>
+        </select>
+        <input
+          type="number"
+          name="Monthly_Income"
+          placeholder="Monthly Income"
+          value={formData.Monthly_Income}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        />
+        <input
+          type="number"
+          name="Num_Missed_Payments"
+          placeholder="Number of Missed Payments"
+          value={formData.Num_Missed_Payments}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        />
+        <input
+          type="number"
+          name="Days_Past_Due"
+          placeholder="Days Past Due"
+          value={formData.Days_Past_Due}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        />
+        <input
+          type="number"
+          name="Collateral_Value"
+          placeholder="Collateral Value"
+          value={formData.Collateral_Value}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        />
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+        >
+          Predict
+        </button>
       </form>
       {result && (
         <div className="mt-4 p-4 bg-green-100 border-l-4 border-green-500 text-green-700">

@@ -13,3 +13,4 @@ export interface FormData {
     loan_recovery_status: string;
     confidence: number;
   }
+  

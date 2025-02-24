@@ -1,7 +1,7 @@
 import axios from "axios";
 import { FormData, PredictionResult } from "../types";
 
-const API_URL = "http://localhost:5000"; // Replace with your backend URL
+const API_URL = "http://localhost:5000";
 
 export const predictLoanRecovery = async (data: FormData): Promise<PredictionResult> => {
   try {
